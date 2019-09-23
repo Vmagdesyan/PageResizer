@@ -6,14 +6,20 @@ export class PageResizer extends React.Component {
     super(props);
 
     this.state = {
-      width: 500,
-      height: 500,
+      width: window.innerWidth,
+      height: window.innerHeight,
     };
   }
 
-  onChangeHeight = (event) => this.setState({ height: Number(event.target.value) });
+  onChangeWindowSize = () => this.setState({ height: window.innerHeight, width: window.innerWidth });
 
-  onChangeWidth = (event) => this.setState({ width: Number(event.target.value) });
+  componentDidMount() {
+    window.addEventListener('resize', this.onChangeWindowSize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onChangeWindowSize);
+  }
 
   render() {
     const { childrenRender } = this.props;
@@ -27,20 +33,14 @@ export class PageResizer extends React.Component {
         <div>
           <div>
             Width
-            <input
-              onChange={this.onChangeWidth}
-              value={width}
-            />
-            <div>
-              Height
-            <input
-                onChange={this.onChangeHeight}
-                value={height}
-              />
-            </div>
+            <label>{width}</label>
+          </div>
+          <div>
+            Height
+            <label>{height}</label>
           </div>
         </div>
-        {childrenRender(height, width)}
+        {childrenRender(height / 2, width / 2)}
       </div>
     )
   }

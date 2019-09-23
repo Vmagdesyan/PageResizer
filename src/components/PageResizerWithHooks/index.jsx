@@ -1,32 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export const PageResizerWithHooks = (props) => {
   const { childrenRender } = props;
-  const [ height, changeHeight ] = useState(500);
-  const [ width, changeWidth ] = useState(500);
-  const onChangeHeight = (event) => changeHeight(Number(event.target.value));
-  const onChangeWidth = (event) => changeWidth(Number(event.target.value));
+  const [height, changeHeight] = useState(window.innerHeight);
+  const [width, changeWidth] = useState(window.innerWidth);
+  const onResize = () => {
+    changeHeight(window.innerHeight);
+    changeWidth(window.innerWidth);
+  };
+
+  useLayoutEffect(() => {
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+    }
+  })
 
   return (
     <div>
       <div>
         <div>
           Width
-            <input
-            onChange={onChangeWidth}
-            value={width}
-          />
+            <label>{width}</label>
         </div>
         <div>
           Height
-            <input
-            onChange={onChangeHeight}
-            value={height}
-          />
+            <label>{height}</label>
         </div>
       </div>
-      {childrenRender(height, width)}
+      {childrenRender(height / 2, width / 2)}
     </div>
   );
 }
