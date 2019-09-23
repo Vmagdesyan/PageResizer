@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Block } from '../Block';
+
 import { withPageResizerWithHooks } from '../../HOC/PageResizerWithHooks';
 
 class _BlueBlock extends React.Component {
   render() {
     const { height, width } = this.props;
-    const rootStyle = {
-      height,
-      width,
-      backgroundColor: 'blue',
-    };
 
     return (
-      <div style={rootStyle}>
-        Голубой блок
-      </div>
+      <Block
+        height={height}
+        width={width}
+        color="blue"
+      />
     )
   }
 }
