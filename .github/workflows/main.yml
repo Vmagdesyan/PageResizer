@@ -15,6 +15,7 @@ jobs:
                   echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
 
             - name: Build
+              
               env:
                   RELEASE_VERSION: ${{steps.get_branch.outputs.BRANCH}}
-              run: yarn build
+              run: echo "${{steps.get_branch.outputs.BRANCH}}` && yarn build
