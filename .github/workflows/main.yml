@@ -1,0 +1,20 @@
+name: patient-care:prelive
+on: [push, pull_request]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install packages
+              run: yarn
+
+            - name: Get branch
+              id: get_branch
+              run: |
+                  echo ::set-output name=BRANCH::${GITHUB_REF#refs/heads/}
+
+            - name: Build
+              env:
+                  RELEASE_VERSION: ${{steps.get_branch.outputs.BRANCH}}
+              run: yarn build

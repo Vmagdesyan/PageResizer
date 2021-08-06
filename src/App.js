@@ -8,6 +8,7 @@ import { ResizeTrackerWithHooks } from './components/ResizeTrackerWithHooks';
 import './App.css';
 
 function App() {
+  console.log(process.env.RELEASE_VERSION)
   return (
     <div className="App">
       <RedBlock/>
